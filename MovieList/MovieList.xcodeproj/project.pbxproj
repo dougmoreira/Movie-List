@@ -16,6 +16,8 @@
 		F2EAF3172735DF18000855B9 /* MovieListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EAF3162735DF18000855B9 /* MovieListTests.swift */; };
 		F2EAF3212735DF18000855B9 /* MovieListUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EAF3202735DF18000855B9 /* MovieListUITests.swift */; };
 		F2EAF3232735DF18000855B9 /* MovieListUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EAF3222735DF18000855B9 /* MovieListUITestsLaunchTests.swift */; };
+		F2EAF3322735E0B4000855B9 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EAF3312735E0B4000855B9 /* HomeViewController.swift */; };
+		F2EAF3342735E133000855B9 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EAF3332735E133000855B9 /* HomeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		F2EAF31C2735DF18000855B9 /* MovieListUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovieListUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2EAF3202735DF18000855B9 /* MovieListUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListUITests.swift; sourceTree = "<group>"; };
 		F2EAF3222735DF18000855B9 /* MovieListUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		F2EAF3312735E0B4000855B9 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		F2EAF3332735E133000855B9 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +83,7 @@
 		F2EAF2F32735DF17000855B9 = {
 			isa = PBXGroup;
 			children = (
+				F2EAF32F2735E05A000855B9 /* Scenes */,
 				F2EAF2FE2735DF17000855B9 /* MovieList */,
 				F2EAF3152735DF18000855B9 /* MovieListTests */,
 				F2EAF31F2735DF18000855B9 /* MovieListUITests */,
@@ -125,6 +130,23 @@
 				F2EAF3222735DF18000855B9 /* MovieListUITestsLaunchTests.swift */,
 			);
 			path = MovieListUITests;
+			sourceTree = "<group>";
+		};
+		F2EAF32F2735E05A000855B9 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				F2EAF3302735E06C000855B9 /* Home */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		F2EAF3302735E06C000855B9 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				F2EAF3312735E0B4000855B9 /* HomeViewController.swift */,
+				F2EAF3332735E133000855B9 /* HomeView.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -261,6 +283,8 @@
 				F2EAF3042735DF17000855B9 /* ViewController.swift in Sources */,
 				F2EAF3002735DF17000855B9 /* AppDelegate.swift in Sources */,
 				F2EAF3022735DF17000855B9 /* SceneDelegate.swift in Sources */,
+				F2EAF3342735E133000855B9 /* HomeView.swift in Sources */,
+				F2EAF3322735E0B4000855B9 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
