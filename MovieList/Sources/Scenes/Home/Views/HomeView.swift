@@ -9,10 +9,11 @@ import UIKit
 
 protocol HomeViewProtocol: NSObject {
     func setupViewData(_ viewData: [MovieListModels.ViewData])
+    func isLoading(_: Bool)
 }
 
 final class HomeView: UIView {
-    
+        
     // MARK: - Components
     
     private lazy var movieCollections: UICollectionView = {
@@ -21,11 +22,19 @@ final class HomeView: UIView {
         collection.translatesAutoresizingMaskIntoConstraints = false
         collection.delegate = self
         collection.dataSource = self
-        collection.backgroundColor = .black
         collection.register(MovieItemCell.self, forCellWithReuseIdentifier: Constants.movieCollectionCellId)
         collection.register(WelcomeCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: Constants.welcomeCellId)
         collection.backgroundColor = .systemGray2
         return collection
+    }()
+    
+    private let activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.style = .large
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.backgroundColor = .systemGray2
+        return activityIndicator
     }()
     
     // MARK: - Constants
@@ -57,11 +66,14 @@ final class HomeView: UIView {
     
     private func constrainSubviews() {
         constrainMovieCollection()
+        constrainActivityIndicator()
         
     }
     
     private func addSubviews() {
         addSubview(movieCollections)
+        addSubview(activityIndicator)
+
     }
     
     private func constrainMovieCollection() {
@@ -71,6 +83,18 @@ final class HomeView: UIView {
             movieCollections.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
             movieCollections.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
+    }
+    
+    private func constrainActivityIndicator() {
+        NSLayoutConstraint.activate([
+            activityIndicator.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            activityIndicator.leadingAnchor.constraint(equalTo: leadingAnchor),
+            activityIndicator.trailingAnchor.constraint(equalTo: trailingAnchor),
+            activityIndicator.bottomAnchor.constraint(equalTo: bottomAnchor),
+            activityIndicator.heightAnchor.constraint(equalToConstant: 64),
+            activityIndicator.widthAnchor.constraint(equalToConstant: 64)
+        ])
+    
     }
     
 }
@@ -120,9 +144,20 @@ extension HomeView: UICollectionViewDataSource {
 }
 
 extension HomeView: HomeViewProtocol {
+    func isLoading(_ loading: Bool) {
+        if loading {
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.stopAnimating()
+            
+        }
+        
+    }
+    
     func setupViewData(_ viewData: [MovieListModels.ViewData]) {
         collectionData = viewData
         movieCollections.reloadData()
+        activityIndicator.stopAnimating()
     }
 
 }

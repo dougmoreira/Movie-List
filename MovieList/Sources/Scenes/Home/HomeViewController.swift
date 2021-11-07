@@ -67,14 +67,22 @@ final class HomeViewController: UIViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
         searchController.searchBar.delegate = self
     }
-
     
 }
 
 extension HomeViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        guard let searchTerm = searchBar.text else { return }
+        guard
+            let searchTerm = searchBar.text,
+            searchTerm != ""
+        else {
+            contentView?.isLoading(false)
+            return
+            
+        }
+        
         self.interactor.onDidType(searchTerm: searchTerm)
+        contentView?.isLoading(true)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -87,6 +95,7 @@ extension HomeViewController: UISearchBarDelegate {
         self.interactor.onDidType(searchTerm: searchTerm)
     }
     
+    
 }
 
 extension HomeViewController: HomeDisplayLogic {
@@ -94,6 +103,7 @@ extension HomeViewController: HomeDisplayLogic {
         DispatchQueue.main.async {
             self.contentView?.setupViewData(viewData)
         }
+        
     }
 
 }
