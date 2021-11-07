@@ -77,6 +77,16 @@ extension HomeViewController: UISearchBarDelegate {
         self.interactor.onDidType(searchTerm: searchTerm)
     }
     
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        let viewData = [MovieListModels.ViewData]()
+        contentView?.setupViewData(viewData)
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchTerm = searchBar.text else { return }
+        self.interactor.onDidType(searchTerm: searchTerm)
+    }
+    
 }
 
 extension HomeViewController: HomeDisplayLogic {

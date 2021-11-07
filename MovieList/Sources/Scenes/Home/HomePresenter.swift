@@ -23,26 +23,10 @@ final class HomePresenter {
         
         data.titles.forEach { item in
             viewData.append(.init(name: item.title, urlImage: item.image))
-            loadImage(url: URL(string: item.image)!)
         }
         
         return viewData
-        
     }
-    
-    private func loadImage(url: URL) {
-        let cache = NSCache<NSString, UIImage>()
-        DispatchQueue.global().async {
-            if let data = try? Data(contentsOf: url) {
-                if let image = UIImage(data: data) {
-                    cache.setObject(image, forKey: url.path as NSString)
-                }
-                
-            }
-            
-        }
-    }
-    
 }
 
 extension HomePresenter: HomePresentationLogic {
@@ -50,5 +34,4 @@ extension HomePresenter: HomePresentationLogic {
         let viewData = handleMovieListData(with: data)
         viewController?.displaySearchResult(viewData)
     }
-
 }

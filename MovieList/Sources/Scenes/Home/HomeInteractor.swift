@@ -53,8 +53,6 @@ extension HomeInteractor: HomeBusinessLogic {
                 }
             }
         })
-        
     }
-    
     
 }

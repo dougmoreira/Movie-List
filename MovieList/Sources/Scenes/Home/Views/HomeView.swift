@@ -23,6 +23,7 @@ final class HomeView: UIView {
         collection.dataSource = self
         collection.backgroundColor = .black
         collection.register(MovieItemCell.self, forCellWithReuseIdentifier: Constants.movieCollectionCellId)
+        collection.register(WelcomeCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: Constants.welcomeCellId)
         collection.backgroundColor = .systemGray2
         return collection
     }()
@@ -31,6 +32,7 @@ final class HomeView: UIView {
     
     private enum Constants {
         static let movieCollectionCellId = "movieId"
+        static let welcomeCellId = "headerId"
     }
     
     // MARK: - Properties
@@ -97,6 +99,23 @@ extension HomeView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         .init(top: 24, left: 0, bottom: 0, right: 0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: Constants.welcomeCellId, for: indexPath) as! WelcomeCell
+        
+        return header
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        
+        guard collectionData.isEmpty else {
+            return .init(width: frame.width, height: 0)
+            
+        }
+        
+        return .init(width: 0, height: 200)
+        
     }
 }
 
