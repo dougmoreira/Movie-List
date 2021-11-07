@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol HomeViewProtocol: NSObject {
+    func setupViewData(_ viewData: [MovieListModels.ViewData])
+}
+
 final class HomeView: UIView {
     
     // MARK: - Components
@@ -15,10 +19,11 @@ final class HomeView: UIView {
         let layout = UICollectionViewFlowLayout()
         let collection = UICollectionView(frame: frame, collectionViewLayout: layout)
         collection.translatesAutoresizingMaskIntoConstraints = false
-        collection.backgroundColor = .yellow
         collection.delegate = self
         collection.dataSource = self
+        collection.backgroundColor = .black
         collection.register(MovieItemCell.self, forCellWithReuseIdentifier: Constants.movieCollectionCellId)
+        collection.backgroundColor = .systemGray2
         return collection
     }()
     
@@ -28,6 +33,10 @@ final class HomeView: UIView {
         static let movieCollectionCellId = "movieId"
     }
     
+    // MARK: - Properties
+    
+    private var collectionData: [MovieListModels.ViewData] = []
+    
     // MARK: - Initializers
     
     override init(frame: CGRect) {
@@ -35,6 +44,7 @@ final class HomeView: UIView {
         
         addSubviews()
         constrainSubviews()
+        backgroundColor = .systemGray3
     }
     
     required init?(coder: NSCoder) {
@@ -72,11 +82,13 @@ extension HomeView: UICollectionViewDelegateFlowLayout {
 extension HomeView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.movieCollectionCellId, for: indexPath) as! MovieItemCell
+        let cellViewData = collectionData[indexPath.item]
+        cell.setupCell(with: cellViewData)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        20
+        collectionData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -86,4 +98,12 @@ extension HomeView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         .init(top: 24, left: 0, bottom: 0, right: 0)
     }
+}
+
+extension HomeView: HomeViewProtocol {
+    func setupViewData(_ viewData: [MovieListModels.ViewData]) {
+        collectionData = viewData
+        movieCollections.reloadData()
+    }
+
 }

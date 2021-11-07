@@ -8,11 +8,17 @@
 import UIKit
 
 protocol HomeDisplayLogic: NSObject {
-    func displaySearchResult()
+    func displaySearchResult(_ viewData: [MovieListModels.ViewData])
 }
 
 final class HomeViewController: UIViewController {
     
+    // MARK: - Properties
+    
+    var contentView: HomeViewProtocol? {
+        view as? HomeViewProtocol
+    }
+        
     // - MARK: Components
     
     private let searchController = UISearchController(searchResultsController: nil)
@@ -40,12 +46,17 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSearchController()
-        
+
     }
     
     override func loadView() {
         super.loadView()
         view = HomeView(frame: view.frame)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        navigationItem.title = "Movie List"
     }
     
     // MARK: - Setup
@@ -56,15 +67,23 @@ final class HomeViewController: UIViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
         searchController.searchBar.delegate = self
     }
+
     
 }
 
 extension HomeViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard let searchTerm = searchBar.text else { return }
+        self.interactor.onDidType(searchTerm: searchTerm)
+    }
     
 }
 
 extension HomeViewController: HomeDisplayLogic {
-    func displaySearchResult() {
-        
+    func displaySearchResult(_ viewData: [MovieListModels.ViewData]) {
+        DispatchQueue.main.async {
+            self.contentView?.setupViewData(viewData)
+        }
     }
+
 }

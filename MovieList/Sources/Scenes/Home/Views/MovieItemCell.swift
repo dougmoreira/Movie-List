@@ -8,21 +8,22 @@
 import UIKit
 
 final class MovieItemCell: UICollectionViewCell {
-    
+        
     // MARK: - Components
     
-    private let imageCard: UIImageView = {
-        let image = UIImageView()
+    private let imageCard: CustomImageView = {
+        let image = CustomImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.backgroundColor = .green
+        image.layer.cornerRadius = 6
+        image.clipsToBounds = true
         return image
     }()
     
-    private let titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Harry Potter"
         label.font = .boldSystemFont(ofSize: 24)
+        label.numberOfLines = .zero
         return label
     }()
     
@@ -30,10 +31,9 @@ final class MovieItemCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .systemPink
-        
         addSubViews()
         constrainSubviews()
+        setupCellStyle()
     }
     
     required init?(coder: NSCoder) {
@@ -64,8 +64,22 @@ final class MovieItemCell: UICollectionViewCell {
     private func constrainTitleLabel() {
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: imageCard.trailingAnchor, constant: 24),
+            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             titleLabel.heightAnchor.constraint(equalTo: heightAnchor, constant: 24)
         ])
+        
+    }
+    
+    private func setupCellStyle() {
+        backgroundColor = .systemGray6
+        layer.cornerRadius = 6
+    }
+    
+    // MARK: - Setup Cell
+    
+    public func setupCell(with viewData: MovieListModels.ViewData) {
+        titleLabel.text = viewData.name
+        imageCard.load(url: URL(string: viewData.urlImage)!)
         
     }
 

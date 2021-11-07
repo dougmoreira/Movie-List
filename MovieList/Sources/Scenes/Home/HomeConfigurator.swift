@@ -14,7 +14,8 @@ protocol HomeConfiguratorProtocol {
 final class HomeConfigurator: HomeConfiguratorProtocol {
     func resolveViewController() -> UIViewController {
         let presenter = HomePresenter()
-        let interactor = HomeInteractor(presenter: presenter)
+        let service = GetMovieListService()
+        let interactor = HomeInteractor(presenter: presenter, service: service)
         let router = HomeRouter()
         let viewController = HomeViewController(interactor: interactor, router: router)
         presenter.viewController = viewController

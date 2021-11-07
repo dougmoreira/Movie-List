@@ -21,7 +21,5 @@ final class HomeRouter {
 }
 
 extension HomeRouter: HomeRoutingLogic {
-    func routeToMovieDetail() {
-        
-    }
+    func routeToMovieDetail() {}
 }

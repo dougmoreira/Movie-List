@@ -20,6 +20,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let rootViewController = HomeConfigurator().resolveViewController()
         let navController = UINavigationController(rootViewController: rootViewController)
+        navController.navigationBar.prefersLargeTitles = false
+
         window?.rootViewController = navController
     }
 
