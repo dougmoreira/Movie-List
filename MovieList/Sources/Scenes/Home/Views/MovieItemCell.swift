@@ -8,13 +8,31 @@
 import UIKit
 
 final class MovieItemCell: UICollectionViewCell {
+    
+    // MARK: - View Metrics
+    
+    private enum Constants {
+        struct ViewMetrics {
+            static let smallRadio: CGFloat = 6
+            static let baseTitle: CGFloat = 24
+        }
+        
+        struct Spaces {
+            static let baseSpace: CGFloat = 24
+        }
+        
+        struct Sizes {
+            static let large: CGFloat = 128
+        }
+        
+    }
         
     // MARK: - Components
     
     private let imageCard: CustomImageView = {
         let image = CustomImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.layer.cornerRadius = 6
+        image.layer.cornerRadius = Constants.ViewMetrics.smallRadio
         image.clipsToBounds = true
         return image
     }()
@@ -22,7 +40,7 @@ final class MovieItemCell: UICollectionViewCell {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .boldSystemFont(ofSize: 24)
+        label.font = .boldSystemFont(ofSize: Constants.ViewMetrics.baseTitle)
         label.numberOfLines = .zero
         return label
     }()
@@ -55,24 +73,24 @@ final class MovieItemCell: UICollectionViewCell {
     private func constrainImageCard() {
         NSLayoutConstraint.activate([
             imageCard.centerYAnchor.constraint(equalTo: centerYAnchor),
-            imageCard.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            imageCard.heightAnchor.constraint(equalToConstant: 128),
-            imageCard.widthAnchor.constraint(equalToConstant: 128)
+            imageCard.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.Spaces.baseSpace),
+            imageCard.heightAnchor.constraint(equalToConstant: Constants.Sizes.large),
+            imageCard.widthAnchor.constraint(equalToConstant: Constants.Sizes.large)
         ])
     }
     
     private func constrainTitleLabel() {
         NSLayoutConstraint.activate([
-            titleLabel.leadingAnchor.constraint(equalTo: imageCard.trailingAnchor, constant: 24),
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
-            titleLabel.heightAnchor.constraint(equalTo: heightAnchor, constant: 24)
+            titleLabel.leadingAnchor.constraint(equalTo: imageCard.trailingAnchor, constant: Constants.Spaces.baseSpace),
+            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Constants.Spaces.baseSpace),
+            titleLabel.heightAnchor.constraint(equalTo: heightAnchor, constant: Constants.Spaces.baseSpace)
         ])
         
     }
     
     private func setupCellStyle() {
         backgroundColor = .systemGray6
-        layer.cornerRadius = 6
+        layer.cornerRadius = Constants.ViewMetrics.smallRadio
     }
     
     // MARK: - Setup Cell

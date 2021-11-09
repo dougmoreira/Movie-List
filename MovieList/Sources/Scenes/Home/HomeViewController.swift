@@ -21,7 +21,10 @@ final class HomeViewController: UIViewController {
         
     // - MARK: Components
     
-    private let searchController = UISearchController(searchResultsController: nil)
+    private let searchController: UISearchController = {
+        let searchController = UISearchController(searchResultsController: nil)
+        return searchController
+    }()
     
     // MARK: - Dependencies
     

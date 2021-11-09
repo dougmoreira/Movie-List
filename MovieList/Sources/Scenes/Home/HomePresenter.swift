@@ -10,6 +10,7 @@ import UIKit
 
 protocol HomePresentationLogic {
     func presentMovieList(with data: MovieListEntity)
+    func presentErrorView()
 }
 
 final class HomePresenter {
@@ -33,5 +34,9 @@ extension HomePresenter: HomePresentationLogic {
     func presentMovieList(with data: MovieListEntity) {
         let viewData = handleMovieListData(with: data)
         viewController?.displaySearchResult(viewData)
+    }
+    
+    func presentErrorView() {
+        //
     }
 }

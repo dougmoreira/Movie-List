@@ -14,8 +14,11 @@ final class WelcomeCell: UICollectionReusableView {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Created by Douglas Moreira"
-        label.font = .boldSystemFont(ofSize: 18)
+        label.text = "🦄\nby Douglas Moreira "
+        label.numberOfLines = .zero
+        label.textAlignment = .center
+        label.font = .boldSystemFont(ofSize: 14)
+        label.textColor = .systemGray6
         return label
     }()
     
@@ -41,11 +44,12 @@ final class WelcomeCell: UICollectionReusableView {
     private func constrainSubviews() {
         constrainTitleLabel()
     }
-    
+
     private func constrainTitleLabel() {
         NSLayoutConstraint.activate([
             titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
+            titleLabel.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+
         ])
     }
     

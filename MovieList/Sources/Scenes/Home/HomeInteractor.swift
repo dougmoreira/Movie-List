@@ -42,17 +42,14 @@ extension HomeInteractor: HomeBusinessLogic {
     func onDidType(searchTerm: String) {
         let formattedSearchTerm = removeSpaces(searchTerm)
         
-        timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { _ in
-            self.service.getMovieList(with: formattedSearchTerm) { result in
-                switch result {
-                case .success(let resultData):
-                    self.presenter.presentMovieList(with: resultData)
-                case .failure(let error):
-                    debugPrint(error)
-                }
+        self.service.getMovieList(with: formattedSearchTerm) { result in
+            switch result {
+            case .success(let resultData):
+                self.presenter.presentMovieList(with: resultData)
+            case .failure:
+                self.presenter.presentErrorView()
             }
-        })
+        }
     }
     
 }

@@ -7,12 +7,16 @@
 
 import Foundation
 
+public enum GetMoviesError: Error {
+    case serverError(_: Error?)
+}
+
 protocol GetMovieListServiceProtocol {
-    func getMovieList(with searchTerm: String, than handle: @escaping (Result<MovieListEntity, Error>) -> Void)
+    func getMovieList(with searchTerm: String, than handle: @escaping (Result<MovieListEntity, GetMoviesError>) -> Void)
 }
 
 final class GetMovieListService: GetMovieListServiceProtocol {
-    func getMovieList(with searchTerm: String, than handle: @escaping (Result<MovieListEntity, Error>) -> Void) {
+    func getMovieList(with searchTerm: String, than handle: @escaping (Result<MovieListEntity, GetMoviesError>) -> Void) {
         let headers = [
             "x-rapidapi-host": "imdb-internet-movie-database-unofficial.p.rapidapi.com",
             "x-rapidapi-key": "311f6a6f13mshba9ef6710d33953p1679e1jsn55b10b6a1b01"
@@ -35,11 +39,11 @@ final class GetMovieListService: GetMovieListServiceProtocol {
                     let decodedData = try decoder.decode(MovieListEntity.self, from: data)
                     handle(.success(decodedData))
                 } catch let error {
-                    handle(.failure(error))
+                    handle(.failure(.serverError(error)))
                 }
 
             case .failure(let error):
-                debugPrint(error)
+                handle(.failure(.serverError(error)))
             }
         }
         

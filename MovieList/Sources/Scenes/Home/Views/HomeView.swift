@@ -13,6 +13,29 @@ protocol HomeViewProtocol: NSObject {
 }
 
 final class HomeView: UIView {
+    
+    // MARK: - View Metrics
+    
+    private enum Constants {
+        struct Spaces {
+            static let base: CGFloat = 24
+            static let medium: CGFloat = 16
+            static let large: CGFloat = 32
+        }
+        
+        struct Sizes {
+            static let navigationBarPadding: CGFloat = 250
+            static let cellHeight: CGFloat = 200
+            static let cardSize: CGFloat = 64
+        }
+        
+        struct Keys {
+            static let movieCollectionCellId = "movieId"
+            static let welcomeCellId = "headerId"
+        }
+        
+    }
+    
         
     // MARK: - Components
     
@@ -22,8 +45,8 @@ final class HomeView: UIView {
         collection.translatesAutoresizingMaskIntoConstraints = false
         collection.delegate = self
         collection.dataSource = self
-        collection.register(MovieItemCell.self, forCellWithReuseIdentifier: Constants.movieCollectionCellId)
-        collection.register(WelcomeCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: Constants.welcomeCellId)
+        collection.register(MovieItemCell.self, forCellWithReuseIdentifier: Constants.Keys.movieCollectionCellId)
+        collection.register(WelcomeCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: Constants.Keys.welcomeCellId)
         collection.backgroundColor = .systemGray2
         return collection
     }()
@@ -36,13 +59,6 @@ final class HomeView: UIView {
         activityIndicator.backgroundColor = .systemGray2
         return activityIndicator
     }()
-    
-    // MARK: - Constants
-    
-    private enum Constants {
-        static let movieCollectionCellId = "movieId"
-        static let welcomeCellId = "headerId"
-    }
     
     // MARK: - Properties
     
@@ -91,8 +107,8 @@ final class HomeView: UIView {
             activityIndicator.leadingAnchor.constraint(equalTo: leadingAnchor),
             activityIndicator.trailingAnchor.constraint(equalTo: trailingAnchor),
             activityIndicator.bottomAnchor.constraint(equalTo: bottomAnchor),
-            activityIndicator.heightAnchor.constraint(equalToConstant: 64),
-            activityIndicator.widthAnchor.constraint(equalToConstant: 64)
+            activityIndicator.heightAnchor.constraint(equalToConstant: Constants.Sizes.cardSize),
+            activityIndicator.widthAnchor.constraint(equalToConstant: Constants.Sizes.cardSize)
         ])
     
     }
@@ -107,7 +123,7 @@ extension HomeView: UICollectionViewDelegateFlowLayout {
 
 extension HomeView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.movieCollectionCellId, for: indexPath) as! MovieItemCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.Keys.movieCollectionCellId, for: indexPath) as! MovieItemCell
         let cellViewData = collectionData[indexPath.item]
         cell.setupCell(with: cellViewData)
         return cell
@@ -118,15 +134,15 @@ extension HomeView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        .init(width: 400, height: 200)
+        .init(width: frame.width - Constants.Spaces.large, height: Constants.Sizes.cellHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        .init(top: 24, left: 0, bottom: 0, right: 0)
+        .init(top: Constants.Spaces.base, left: Constants.Spaces.medium, bottom: Constants.Spaces.medium, right: Constants.Spaces.medium)
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: Constants.welcomeCellId, for: indexPath) as! WelcomeCell
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: Constants.Keys.welcomeCellId, for: indexPath) as! WelcomeCell
         
         return header
     }
@@ -134,11 +150,11 @@ extension HomeView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         
         guard collectionData.isEmpty else {
-            return .init(width: frame.width, height: 0)
+            return .init()
             
         }
-        
-        return .init(width: 0, height: 200)
+                
+        return .init(width: frame.width, height: frame.height - Constants.Sizes.navigationBarPadding)
         
     }
 }

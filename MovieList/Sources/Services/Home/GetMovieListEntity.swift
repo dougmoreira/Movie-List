@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct MovieListEntity: Decodable {
+struct MovieListEntity: Decodable, Equatable {
     let titles: [Title]
 }
 
-struct Title: Decodable {
+struct Title: Decodable, Equatable {
     let id, title: String
     let image: String
 }
