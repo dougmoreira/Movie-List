@@ -1,5 +1,6 @@
 # Movie-List
 **Movie List** is an app that you can search for movie titles.
+![](https://github.com/essentialdevelopercom/ios-lead-essentials-feed-api-challenge/workflows/CI/badge.svg)
 
 ### Remote Feed Image Spec
 
